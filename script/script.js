@@ -1,5 +1,5 @@
 const sauna_place_one = {
-    one_hour: {
+    1: {
         monday: 120,
         tuesday: 120,
         wednesday: 120,
@@ -8,7 +8,7 @@ const sauna_place_one = {
         saturday: 120,
         sunday: 120,
     },
-    two_hours: {
+    2: {
         monday: 200,
         tuesday: 200,
         wednesday: 200,
@@ -17,7 +17,7 @@ const sauna_place_one = {
         saturday: 250,
         sunday: 250,
     },
-    three_hours: {
+    3: {
         monday: 250,
         tuesday: 250,
         wednesday: 250,
@@ -29,7 +29,7 @@ const sauna_place_one = {
 };
 
 const sauna_place_second = {
-    one_hour: {
+    1: {
         monday: 150,
         tuesday: 150,
         wednesday: 150,
@@ -38,7 +38,7 @@ const sauna_place_second = {
         saturday: 150,
         sunday: 150,
     },
-    two_hours: {
+    2: {
         monday: 250,
         tuesday: 250,
         wednesday: 250,
@@ -47,7 +47,7 @@ const sauna_place_second = {
         saturday: 300,
         sunday: 300,
     },
-    three_hours: {
+    3: {
         monday: 300,
         tuesday: 300,
         wednesday: 300,
@@ -59,8 +59,8 @@ const sauna_place_second = {
 };
 
 function calculatePrice() {
-    const people = document.getElementById('people').value;
-    const hours = document.getElementById('hours').value;
+    const people = parseInt(document.getElementById('people').value, 10);
+    const hours = parseInt(document.getElementById('hours').value, 10);
     const day = document.getElementById('day').value;
     const sauna = document.getElementById('sauna').value;
 
@@ -74,19 +74,67 @@ function calculatePrice() {
             saunaData = sauna_place_second;
             break;
         default:
-            saunaData = null;
-            break;
+            console.log('Sauna has not been found');
+            return;
     }
 
-    const totalPrice = saunaData[hours][day];
-    const pricePerPerson = people > 0 ? (totalPrice / people).toFixed(2) + 'грн' : '-';
+    let basePrice = saunaData[Math.min(hours, 3)][day];
 
+    let additionalPeople
+    let extraTime
+
+    if (people > 4) {
+        additionalPeople = 50 * (people - 4)
+        basePrice += additionalPeople;
+    }
+
+    if (hours > 3) {
+        extraTime = 100 * (hours - 3)
+        basePrice += extraTime;
+    }
+
+    const showerBase = 25
+    const showerCost = showerBase * people;
+
+    const totalPrice = basePrice + showerCost;
+    const pricePerPerson = people > 0 ? (totalPrice / people).toFixed(2) + ' грн' : '-';
+
+
+    // --GET ELEMENTS
+
+    const showerAmount = document.getElementById('shower-amount');
+    const additionalPeopleAmount = document.getElementById('additional-people-amount');
+    const extraTimeAmount = document.getElementById('extra-time-amount');
     const totalPriceAmount = document.getElementById('total-price-amount');
     const pricePerPersonAmount = document.getElementById('price-per-person-amount');
 
+
+    //---DATA OUTPUT---
+
+    //shower
+    showerAmount.innerText = `${showerBase.toFixed(2)} грн`;
+
+    //extra
+    if (people > 4) {
+        additionalPeopleAmount.innerText = `${additionalPeople.toFixed(2)} грн`
+    } else {
+        additionalPeopleAmount.innerText = '-'
+    }
+
+    if (hours > 3) {
+        extraTimeAmount.innerText = `${extraTime.toFixed(2)} грн`
+    } else {
+        extraTimeAmount.innerText = '-'
+    }
+
+    //base
     totalPriceAmount.innerText = `${totalPrice.toFixed(2)} грн`;
     pricePerPersonAmount.innerText = `${pricePerPerson}`;
 
-    totalPriceAmount.classList.add('font-bold', 'text-black','uppercase');
-    pricePerPersonAmount.classList.add('font-bold', 'text-black','uppercase');
+
+    //---STYLES---
+
+    pricePerPersonAmount.classList.add('font-bold', 'text-black', 'uppercase');
+    totalPriceAmount.classList.add('font-bold', 'text-black', 'text-xl', 'uppercase');
 }
+

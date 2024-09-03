@@ -15,20 +15,11 @@
         <form id="sauna-form" class="my-10">
             <div class="mb-4">
                 <label for="people" class="block text-sm font-medium text-gray-700">Яка кількість людей планується?</label>
-                <select id="people" name="people" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 cursor-pointer">
-                    <option value="1">1 </option>
-                    <option value="2">2 </option>
-                    <option value="3">3 </option>
-                    <option value="4">4 </option>
-                </select>
+                <input id="people" name="people" type="number" value="1" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 cursor-pointer" />
             </div>
             <div class="mb-4">
                 <label for="hours" class="block text-sm font-medium text-gray-700">Скільки годин ?</label>
-                <select id="hours" name="hours" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 cursor-pointer">
-                    <option value="one_hour">1</option>
-                    <option value="two_hours">2</option>
-                    <option value="three_hours">3</option>
-                </select>
+                <input id="hours" name="hours" value="1" type="number" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 cursor-pointer" />
             </div>
             <div class="mb-4">
                 <label for="day" class="block text-sm font-medium text-gray-700">Який день тижня?</label>
@@ -55,9 +46,13 @@
         </form>
 
         <h2 class="text-xl font-bold my-6 pb-6 border-b-2 border-gray-700">До оплати:</h2>
-        <p id="total-price" class="text-gray-700 my-2 flex justify-between">Загальна вартість: <span id="total-price-amount">-</span></p>
-        <p id="price-per-person" class="text-gray-700 my-2 flex justify-between">Вартість з особи: <span id="price-per-person-amount">-</span></p>
 
+        <p class="text-gray-700 my-2 flex justify-between text-sm">*Душ (ціна за одну людину):<span id="shower-amount">-</span></p>
+        <p class="text-gray-700 my-2 flex justify-between text-sm">*Доплата за кількість осіб (більше 4-ч осіб):<span id="additional-people-amount">-</span></p>
+        <p class="text-gray-700 my-2 flex justify-between text-sm">*Доплата за час (більше 3-х годин):<span id="extra-time-amount">-</span></p>
+
+        <p class="text-gray-700 mt-6 flex justify-between">Вартість з особи: <span id="price-per-person-amount">-</span></p>
+        <p class="text-gray-700 flex justify-between"><span>Загальна вартість:</span> <span id="total-price-amount">-</span></p>
     </div>
    <script src="./script/script.js"></script>
 </body>
